@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Translator_KMM"
+rootProject.name = "Webinar_App"
 include(":composeApp")
 include(":shared")
