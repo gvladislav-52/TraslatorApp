@@ -23,7 +23,7 @@ extension TranslateScreen {
             error: nil,
             history: []
         )
-        private var handle: DisposableHandle?
+        private var handle: Kotlinx_coroutines_coreDisposableHandle?//DisposableHandle?
 
         init(historyDataSource: HistoryDataSource, translateUseCase: Translate) {
             self.historyDataSource = historyDataSource

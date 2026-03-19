@@ -12,7 +12,7 @@ import Combine
 
     private let viewModel: VoiceToTextViewModel
     @Published var state = VoiceToTextState(powerRatios: [], spokenText: "", canRecord: false, recordError: nil, displayState: nil)
-    private var handle: DisposableHandle?
+    private var handle: Kotlinx_coroutines_coreDisposableHandle?//DisposableHandle?
 
     init(parser: VoiceToTextParser, languageCode: String) {
         self.parser = parser
