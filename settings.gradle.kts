@@ -1,12 +1,12 @@
-pluginManagement {
+pluginManagement {                  //Блок подключаемых плагинов        (ПЛАГИНЫ)
     repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
+        google()                    //нужен для android gradle plugin, compose (часть андроида)
+        mavenCentral()              //публичный репозиторий Java/Kotlin библиотек
+        gradlePluginPortal()        //оф.репозиторий Gradle-плагинов (Kotlin, KMM plugins)
     }
 }
 
-dependencyResolutionManagement {
+dependencyResolutionManagement {    //Блок подключаемых библиотек (БИБЛИОТЕКА)
     repositories {
         google()
         mavenCentral()
@@ -14,5 +14,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Webinar_App"
-include(":composeApp")
-include(":shared")
+include(":composeApp")  //модуль проекта Android
+include(":shared")      //модуль shared части проекта

@@ -1,4 +1,4 @@
-[versions]
+[versions]      #версии всех наших зависимостей
 agp = "8.4.0"
 coilCompose = "2.6.0"
 kotlin = "1.9.23"
@@ -18,7 +18,8 @@ assertK = "0.26.1"
 turbine = "0.7.0"
 rules = "1.5.0"
 
-[libraries]
+[libraries] #подключаемые библиотеки, с описанием зависимостей
+# это куски кода, которые используются в приложении или модуле (через implementation, в проекте появляются классы и функции)
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -51,7 +52,9 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 test-runner = { module = "androidx.test:runner", version.ref = "testRunner" }
 test-rule = { group = "androidx.test", name = "rules", version.ref = "rules" }
 
-[plugins]
+[plugins] #используемые плагины в проекте (gradle plugins)
+# инструменты, которые расширяют возможности Gradle и меняют процесс сборки проекта
+# не предоставляют классы для использования в коде напрямую, они расширяют gradle добавляя новые задачи и правила сборки.
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -62,9 +65,12 @@ kotlin-native-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", versio
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 
-[bundles]
+[bundles]   # группы библиотек, подклбчение сразу нескольких зависимостей
 ktor = [
     "ktor-client-content-negotiation",
     "ktor-client-core",
     "ktor-serialization-kotlinx-json",
 ]
+
+# Библиотека - готовые инструменты в проекте (классы, функции)
+# Плагин - инструкция, как настроить проект, какие инструменты доступны (генератор кода, автоматизация и тд)
