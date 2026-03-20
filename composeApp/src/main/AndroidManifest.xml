@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- простраство имен для атрибутов андроид -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <!-- Приложение может делать сетевые запросы -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Приложение может может записывать звук с микрофона -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
+    <!-- Настройка самого приложения -->
+    <!-- Указывает кастомный класс Application *TranslateApp -->
+    <!-- Запрещает создавть резервные копии на google drive или устройстве -->
+    <!-- Поддержка прав-лев языков арабский, иврит -->
+    <!-- Указываем тему приложения (цвета, шрифты, стили) -->
     <application
         android:name=".TranslateApp"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- Основной экран который будет запущен -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
+            <!-- Без следуюших строк это приложение не появится на домашнем экране, мы укываем маин экран, и экран запуска -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,3 +27,7 @@
         </activity>
     </application>
 </manifest>
+
+    <!-- Мета-данные приложения для андроида -->
+    <!-- Испольщует информацию, которую андроид ос исопльзует при запуске и работе приложения -->
+    <!-- Благодаря нему андроид знает, какой у приложения главный экран, какие разрешения нужны, как назвать приложение, какую тему использовать -->
