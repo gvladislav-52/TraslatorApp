@@ -9,3 +9,10 @@ data class UiHistoryItem(
     val fromLanguage: UiLanguage,
     val toLanguage: UiLanguage
 )
+
+// Хранит данные для отображения истории переводов на экране
+// - это объект который UI понимает и отображает, а не база данных и не сетевой клиент
+
+// HistoryEntity - модель, базы данных
+// HistoryItem - доменная модель, отражает данные бизнес лоигки
+// UiHistoryItem - представление для UI

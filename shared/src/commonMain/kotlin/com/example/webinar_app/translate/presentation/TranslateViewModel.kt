@@ -12,16 +12,18 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class TranslateViewModel(
+class TranslateViewModel(   //контсруктор, отвечает за логику перевода, обработку событий UI, хранения состояний
     private val translate: Translate,
     private val historyDataSource: HistoryDataSource,
-    private val coroutineScope: CoroutineScope?
+    private val coroutineScope: CoroutineScope? //корутина для запуска асинхронных операций
 ) {
 
-    private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
+    private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main) //область для запуска корутин
+    // если в конструкторе передали корутино, то используем ее, если нет то используется Диспатчер Main
+    //все асинхронные операции запускаются внутри этого scope (translateJob = viewModelScope.launch)
 
-    private val _state = MutableStateFlow(TranslateState())
-    val state = combine(
+    private val _state = MutableStateFlow(TranslateState())     //реактивнная стейт переменная, на которую подписан ui
+    val state = combine(    //старый стейт и история подтягиваются, если есть изменения, то стейт меняется.
         _state,
         historyDataSource.getHistory(viewModelScope.coroutineContext)
     ) { state, history ->
@@ -39,13 +41,14 @@ class TranslateViewModel(
             )
         } else state
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TranslateState())
-        .toCommonStateFlow()
+        .toCommonStateFlow()    //превращает Flow в StateFlow чтобы UI мог подписываться
 
-    private var translateJob: Job? = null
+    private var translateJob: Job? = null // обьект группы корутины, который представляет запущенную асихнронную задачу.
+    //Дает возможность отменять предыдущий перевод
 
-    fun onEvent(event: TranslateEvent) {
+    fun onEvent(event: TranslateEvent) {    //принимает события от UI
         when(event) {
-            is TranslateEvent.ChangeTranslationText -> {
+            is TranslateEvent.ChangeTranslationText -> {    //WHEN обрабатывает все варианты событие, и делает какие то действия
                 _state.update { it.copy(
                     fromText = event.text
                 ) }
@@ -127,7 +130,7 @@ class TranslateViewModel(
         }
     }
 
-    private fun translate(state: TranslateState) {
+    private fun translate(state: TranslateState) {  //проверяет, что перевож не выполняется или текст не пустой
         if(state.isTranslating || state.fromText.isBlank()) {
             return
         }
@@ -136,19 +139,19 @@ class TranslateViewModel(
             _state.update { it.copy(
                 isTranslating = true
             ) }
-            val result = translate.execute(
+            val result = translate.execute( // запускается асихронная корутина, вызывается сервис перевода Ktor
                 fromLanguage = state.fromLanguage.language,
                 fromText = state.fromText,
                 toLanguage = state.toLanguage.language
             )
             when(result) {
-                is Resource.Success -> {
+                is Resource.Success -> {    //успешный результат
                     _state.update { it.copy(
                         isTranslating = false,
                         toText = result.data
                     ) }
                 }
-                is Resource.Error -> {
+                is Resource.Error -> {      //неудача
                     _state.update { it.copy(
                         isTranslating = false,
                         error = (result.throwable as? TranslateException)?.error

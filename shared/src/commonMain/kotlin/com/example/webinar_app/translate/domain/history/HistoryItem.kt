@@ -7,3 +7,6 @@ data class HistoryItem(
     val toLanguageCode: String,
     val toText: String,
 )
+
+
+//модель данных бизнес-логики

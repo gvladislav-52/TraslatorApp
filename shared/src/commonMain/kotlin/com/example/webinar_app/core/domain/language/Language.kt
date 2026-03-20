@@ -1,9 +1,10 @@
 package com.example.webinar_app.core.domain.language
 
 enum class Language(
-    val langCode: String,
-    val langName: String
+    val langCode: String,   //код языка
+    val langName: String    //читаемое название языка
 ) {
+    //каждый элемент enum создается с кожом и названием
     ENGLISH("en", "English"),
     ARABIC("ar", "Arabic"),
     AZERBAIJANI("az", "Azerbaijani"),
@@ -33,10 +34,12 @@ enum class Language(
     TURKISH("tr", "Turkish"),
     UKRAINIAN("uk", "Ukrainian");
 
-    companion object {
+    companion object {  //это аналог статических методов
         fun byCode(code: String): Language {
             return values().find { it.langCode == code }
                 ?: throw IllegalArgumentException("Invalid or unsupported language code")
         }
     }
+    // позволяет получить Language по его коду
+    // Если передан неподдерживаемый код - выбросится исключение
 }

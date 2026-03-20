@@ -6,3 +6,5 @@ data class VoiceToTextParserState(
     val powerRatio: Float = 0f,
     val isSpeaking: Boolean = false
 )
+
+// модель для работы с войсом

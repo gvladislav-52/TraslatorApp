@@ -15,3 +15,5 @@ data class TranslationData(
 data class TranslationItem(
     val translatedText: String
 )
+
+//Модель Данных, которые приходят с API для парсинга их.

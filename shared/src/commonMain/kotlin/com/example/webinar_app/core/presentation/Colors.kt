@@ -7,3 +7,5 @@ object Colors {
     const val TextBlack = 0xFF111111
     const val DarkGrey = 0xFF282C31
 }
+
+//объект цветов

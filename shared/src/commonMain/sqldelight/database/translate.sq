@@ -1,20 +1,20 @@
-CREATE TABLE historyEntity(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    fromLanguageCode TEXT NOT NULL,
+CREATE TABLE historyEntity(                         -- Создание таблицу с названием historyEntity в базе данных
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,      -- уникальный идентификатор, с AUTOINCREMENT сам уведичивает число.
+    fromLanguageCode TEXT NOT NULL,                     -- текстовое поле, которое не может быть пустым
     fromText TEXT NOT NULL,
     toLanguageCode TEXT NOT NULL,
     toText TEXT NOT NULL,
-    timestamp INTEGER NOT NULL
-);
+    timestamp INTEGER NOT NULL                           -- целочисленное поле, которое не может быть пустым
+);  -- таблица хранит историю переводов, которую можно показывать пользователю
 
-getHistory:
-SELECT *
+getHistory:     -- синтаксис SQLDelight, это является имя запроса
+SELECT *    --выбираем все поля * из таблицы historyEntity
 FROM historyEntity
-ORDER BY timestamp DESC;
+ORDER BY timestamp DESC;    -- сортировка по полю timestamp от новых к более старым
 
 insertHistoryEntity:
-INSERT OR REPLACE
-INTO historyEntity(
+INSERT OR REPLACE   -- Вставляет новую запись в таблицу historyEntity, если запись с таким id уже есть, то заменяет ее (REPLACE)
+INTO historyEntity( -- список колонок, в которые будут вставленны данные
     id,
     fromLanguageCode,
     fromText,
@@ -24,3 +24,4 @@ INTO historyEntity(
 )
 
 VALUES(?, ?, ?, ?, ?, ?);
+-- Знак ? плейсхолдер для значений, Когда вызываеться метод из кода, туда подставляются реальные данные

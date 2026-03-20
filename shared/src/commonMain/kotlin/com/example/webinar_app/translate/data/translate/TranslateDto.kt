@@ -8,3 +8,6 @@ data class TranslateDto(
     @SerialName("source") val sourceLanguageCode: String,
     @SerialName("target") val targetLanguageCode: String
 )
+
+
+//Модель данных для преобзразования их с Kotlin -> Swift

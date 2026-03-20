@@ -14,3 +14,7 @@ enum class DisplayState {
     DISPLAYING_RESULTS,
     ERROR
 }
+
+
+//структура данных, которая хранит состояние экрана Voice
+//Используется в ViewModel чтобы UI мог реагировать на изменения.

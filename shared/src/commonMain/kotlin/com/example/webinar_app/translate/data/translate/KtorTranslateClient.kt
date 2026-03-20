@@ -11,20 +11,20 @@ import io.ktor.http.*
 import io.ktor.utils.io.errors.*
 
 class KtorTranslateClient(
-    private val httpClient: HttpClient
-): TranslateClient {
+    private val httpClient: HttpClient  //конструктор
+): TranslateClient {    //протокол
 
-    override suspend fun translate(
+    override suspend fun translate(     //реализовываем метод прокотола
         fromLanguage: Language,
         fromText: String,
         toLanguage: Language
-    ): String {
-        val result = try {
+    ): String {                         // возвращаемый тип String
+        val result = try {  //создаем пост запрос
             httpClient.post {
                 url("https://api.langbly.com/language/translate/v2")
                 contentType(ContentType.Application.Json)
-                header("X-API-Key", "cbwVQ4LnuaFVDc7ZsHxxA")
-                setBody(
+                header("X-API-Key", "cbwVQ4LnuaFVDc7ZsHxxA")    //хедер с апи ключом для обращенич
+                setBody(                        //установка боди теля для запроса (отправка нашей дто модели)
                     TranslateDto(
                         textToTranslate = fromText,
                         sourceLanguageCode = fromLanguage.langCode,
@@ -32,30 +32,30 @@ class KtorTranslateClient(
                     )
                 )
             }
-        } catch(e: IOException) {
+        } catch(e: IOException) {   //исключение выкидываем ошибки ввода
             throw TranslateException(TranslateError.SERVICE_UNAVAILABLE)
         }
-        val rawBody = result.body<String>()
+        val rawBody = result.body<String>() // сырые данные
         println("Raw response body: $rawBody")
         when(result.status.value) {
-            in 200..299 -> Unit
+            in 200..299 -> Unit //значит все ок, идем дальше
             500 -> throw TranslateException(TranslateError.SERVER_ERROR)
             in 400..499 -> throw TranslateException(TranslateError.CLIENT_ERROR)
             else -> throw TranslateException(TranslateError.UNKNOWN_ERROR)
         }
 
         val responseDto = try {
-            result.body<TranslatedResponse>()
+            result.body<TranslatedResponse>() //парсим данные JSON в Kotlin объекты TranslatedResponse
         } catch(e: Exception) {
             println("Error parsing response: ${e.message}")
             throw TranslateException(TranslateError.SERVER_ERROR)
         }
 
 // Берём первый перевод из списка
-        val translatedText = responseDto.data.translations.firstOrNull()?.translatedText
+        val translatedText = responseDto.data.translations.firstOrNull()?.translatedText    //берем первый перевод из списка, тк как может вернуть несколько
             ?: throw TranslateException(TranslateError.SERVER_ERROR)
 
 // Возвращаем текст перевода
-        return translatedText
+        return translatedText   //возвращаем его
     }
 }
