@@ -10,34 +10,34 @@ import com.example.webinar_app.translate.domain.translate.Translate
 import com.example.webinar_app.translate.domain.translate.TranslateClient
 import com.example.webinar_app.voice_to_text.domain.VoiceToTextParser
 
-interface AppModule {
-    val historyDataSource: HistoryDataSource
-    val client: TranslateClient
-    val translateUseCase: Translate
-    val voiceParser: VoiceToTextParser
+interface AppModule {   //интерфейс модуля
+    val historyDataSource: HistoryDataSource    //история
+    val client: TranslateClient     //данные для перевода
+    val translateUseCase: Translate     //переведенные жданные
+    val voiceParser: VoiceToTextParser  //парсер войса
 }
 
 class AppModuleImpl(
-    parser: VoiceToTextParser
-): AppModule {
+    parser: VoiceToTextParser       //класс
+): AppModule {  //интерфейс
 
     override val historyDataSource: HistoryDataSource by lazy {
-        SqlDelightHistoryDataSource(
+        SqlDelightHistoryDataSource(    //обращаемся к бд для создания данный в таблице
             TranslateDatabase(
                 DatabaseDriverFactory().create()
             )
         )
     }
 
-    override val client: TranslateClient by lazy {
+    override val client: TranslateClient by lazy {  //создаем запрос на отправку переводимого слова
         KtorTranslateClient(
             HttpClientFactory().create()
         )
     }
 
-    override val translateUseCase: Translate by lazy {
+    override val translateUseCase: Translate by lazy {  //получаем данные с сетки и сохраняем в бд
         Translate(client, historyDataSource)
     }
 
-    override val voiceParser = parser
+    override val voiceParser = parser   //парсер для воспроизвдения музыки
 }

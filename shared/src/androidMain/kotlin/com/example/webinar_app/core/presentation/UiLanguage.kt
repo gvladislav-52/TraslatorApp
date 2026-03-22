@@ -5,7 +5,7 @@ import com.example.webinar_app.R
 import com.example.webinar_app.core.domain.language.Language
 import java.util.Locale
 
-actual data class UiLanguage(
+actual data class UiLanguage(       //платформенная реализация
     @DrawableRes val drawableRes: Int,
     actual val language: Language
 ) {
@@ -22,13 +22,13 @@ actual data class UiLanguage(
         }
     }
 
-    actual companion object {
+    actual companion object {   //статический метод на адроиде по получению кода
         actual fun byCode(langCode: String): UiLanguage {
             return allLanguages.find { it.language.langCode == langCode }
                 ?: throw IllegalArgumentException("Invalid or unsupported language code")
         }
 
-        actual val allLanguages: List<UiLanguage>
+        actual val allLanguages: List<UiLanguage>       //получения списка языков для отображения
             get() = Language.values().map { language ->
                 UiLanguage(
                     language = language,

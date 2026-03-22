@@ -5,7 +5,7 @@
 import SwiftUI
 import shared
 
-struct LanguageDisplay: View {
+struct LanguageDisplay: View {      //отображения использоваемого языка (иконка + текст)
     var language: UiLanguage
 
     var body: some View {

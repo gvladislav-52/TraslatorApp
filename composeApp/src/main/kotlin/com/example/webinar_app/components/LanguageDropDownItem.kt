@@ -1,4 +1,4 @@
-package com.example.webinar_app.translate.presentation.components
+package com.example.webinar_app.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer

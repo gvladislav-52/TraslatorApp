@@ -20,19 +20,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.webinar_app.R
-import com.example.webinar_app.voice_to_text.presentation.DisplayState
-import com.example.webinar_app.voice_to_text.presentation.VoiceToTextEvent
-import com.example.webinar_app.voice_to_text.presentation.VoiceToTextState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.webinar_app.core.theme.LightBlue
-import com.example.webinar_app.voice_to_text.presentation.components.VoiceRecorderDisplay
+import com.example.webinar_app.components.VoiceRecorderDisplay
 
 @Composable
 fun VoiceToTextScreen(

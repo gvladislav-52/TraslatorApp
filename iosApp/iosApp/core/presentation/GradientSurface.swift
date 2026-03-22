@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct GradientSurface: ViewModifier {
+struct GradientSurface: ViewModifier {  //изменение цвета бек
     @Environment(\.colorScheme) var colorScheme
 
     func body(content: Content) -> some View {

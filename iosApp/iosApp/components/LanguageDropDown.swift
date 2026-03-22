@@ -5,7 +5,7 @@
 import SwiftUI
 import shared
 
-struct LanguageDropDown: View {
+struct LanguageDropDown: View { //выпадающий список языков
     var language: UiLanguage
     var isOpen: Bool
     var selectLanguage: (UiLanguage) -> Void

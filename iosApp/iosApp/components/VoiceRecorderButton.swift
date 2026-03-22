@@ -5,7 +5,7 @@
 import SwiftUI
 import shared
 
-struct VoiceRecorderButton: View {
+struct VoiceRecorderButton: View {  //кастомная кнопка для записи
     var displayState: DisplayState
     var onClick: () -> Void
 

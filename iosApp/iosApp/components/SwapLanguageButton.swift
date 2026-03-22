@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct SwapLanguageButton: View {
+struct SwapLanguageButton: View {   // компонент смены языка
     var onClick: () -> Void
     var body: some View {
         Button(action: onClick) {

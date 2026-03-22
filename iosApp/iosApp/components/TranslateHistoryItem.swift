@@ -5,7 +5,7 @@
 import SwiftUI
 import shared
 
-struct TranslateHistoryItem: View {
+struct TranslateHistoryItem: View { //компонент отображения истории 1 перевода
     let item: UiHistoryItem
     let onClick: () -> Void
 

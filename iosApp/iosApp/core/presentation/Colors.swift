@@ -7,7 +7,7 @@ import SwiftUI
 import shared
 
 extension Color {
-    init(hex: Int64, alpha: Double = 1) {
+    init(hex: Int64, alpha: Double = 1) {       //конвертация hex->color
         self.init(
             .sRGB,
             red: Double((hex >> 16) & 0xff) / 255,
@@ -17,8 +17,8 @@ extension Color {
         )
     }
 
-    private static let colors = Colors()
-    static let lightBlue = Color(hex: colors.LightBlue)
+    private static let colors = Colors()        //цвета из KMM модуля
+    static let lightBlue = Color(hex: colors.LightBlue) //использовани в swif части
     static let lightBlueGrey = Color(hex: colors.LightBlueGrey)
     static let accentViolet = Color(hex: colors.AccentViolet)
     static let textBlack = Color(hex: colors.TextBlack)
@@ -33,13 +33,13 @@ extension Color {
 }
 
 private extension Color {
-    init(light: Self, dark: Self) {
+    init(light: Self, dark: Self) { //кастомный инициалихатор для цветов
         self.init(uiColor: UIColor(light: UIColor(light), dark: UIColor(dark)))
     }
 }
 
 private extension UIColor {
-    convenience init(light: UIColor, dark: UIColor) {
+    convenience init(light: UIColor, dark: UIColor) {   //второстепенный инициализатор для темы устройства
         self.init { traits in
             switch traits.userInterfaceStyle {
             case .light, .unspecified:

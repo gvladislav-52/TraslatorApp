@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalAnimationApi::class)
 
-package com.example.webinar_app.translate.presentation.components
+package com.example.webinar_app.components
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -182,14 +182,14 @@ private fun IdleTranslateTextField(
         if (fromText.isEmpty() && !isFocused) {
             Text(
                 text = stringResource(
-                    id = com.example.webinar_app.R.string.enter_a_text_to_translate
+                    id = R.string.enter_a_text_to_translate
                 ),
                 color = LightBlue
             )
         }
         ProgressButton(
             text = stringResource(
-                id = com.example.webinar_app.R.string.translate
+                id = R.string.translate
             ),
             isLoading = isTranslating,
             onClick = onTranslateClick,

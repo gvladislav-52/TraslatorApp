@@ -2,7 +2,6 @@
 
 package com.example.webinar_app.translate.presentation
 
-import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,10 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import com.example.webinar_app.R
-import com.example.webinar_app.translate.presentation.components.*
+import com.example.webinar_app.components.*
 import com.example.webinar_app.translate.domain.translate.TranslateError
-import com.example.webinar_app.translate.presentation.TranslateEvent
-import com.example.webinar_app.translate.presentation.TranslateState
 import java.util.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -32,10 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.example.webinar_app.TranslatorTheme
+import com.example.webinar_app.components.LanguageDropDown
+import com.example.webinar_app.components.SwapLanguagesButton
+import com.example.webinar_app.components.TranslateHistoryItem
+import com.example.webinar_app.components.TranslateTextField
 
 @Composable
 fun TranslateScreen(
@@ -149,7 +148,7 @@ fun TranslateScreen(
                         Toast.makeText(
                             context,
                             context.getString(
-                                com.example.webinar_app.R.string.copied_to_clipboard
+                                R.string.copied_to_clipboard
                             ),
                             Toast.LENGTH_LONG
                         ).show()

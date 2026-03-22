@@ -17,32 +17,33 @@ import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
-
-    @Provides
+//это центральное место, где мы говорим Hilt, как создавать: нужные там компоненты (то это DI контейнер)
+@Module //говорит Hilt, что это модуль зависимостей
+@InstallIn(SingletonComponent::class)   //бъекты создаются один раз на весь lifecycle приложения (singleton)
+object AppModule { //синглтон, который содержит функции-провайдеры
+    //: Hilt будет знать, как создавать HttpClient, TranslateClient, базу данных и т.д.
+    @Provides //эта функция создаёт зависимость, которую Hilt может инжектить
     @Singleton
     fun provideHttpClient(): HttpClient {
-        return HttpClientFactory().create()
+        return HttpClientFactory().create() //Возвращает HttpClient (Ktor), который используется для перевода
     }
 
     @Provides
     @Singleton
     fun provideTranslateClient(httpClient: HttpClient): TranslateClient {
-        return KtorTranslateClient(httpClient)
+        return KtorTranslateClient(httpClient) //Возвращаем клиент перевода, который использует Ktor
     }
 
     @Provides
     @Singleton
     fun provideDatabaseDriver(app: Application): SqlDriver {
-        return DatabaseDriverFactory(app).create()
+        return DatabaseDriverFactory(app).create() //Создаём драйвер для SQLDelight (локальная база)
     }
 
     @Provides
     @Singleton
     fun provideHistoryDataSource(driver: SqlDriver): HistoryDataSource {
-        return SqlDelightHistoryDataSource(TranslateDatabase(driver))
+        return SqlDelightHistoryDataSource(TranslateDatabase(driver)) //История переводов хранится в базе
     }
 
     @Provides
@@ -51,6 +52,6 @@ object AppModule {
         client: TranslateClient,
         dataSource: HistoryDataSource
     ): Translate {
-        return Translate(client, dataSource)
+        return Translate(client, dataSource)    //Основной кейс: делает перевод и сохраняет историю
     }
 }

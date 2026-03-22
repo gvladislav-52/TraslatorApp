@@ -5,7 +5,7 @@
 import SwiftUI
 import shared
 
-struct VoiceRecorderDisplay: View {
+struct VoiceRecorderDisplay: View { //кастомное отображение аудиодорожки, когда мы что то говорим
     var powerRatios: [Double]
 
     var body: some View {

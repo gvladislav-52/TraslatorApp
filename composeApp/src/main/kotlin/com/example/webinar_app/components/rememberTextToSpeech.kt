@@ -1,4 +1,4 @@
-package com.example.webinar_app.translate.presentation.components
+package com.example.webinar_app.components
 
 import android.speech.tts.TextToSpeech
 import androidx.compose.runtime.Composable

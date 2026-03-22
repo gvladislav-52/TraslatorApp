@@ -6,7 +6,7 @@ import SwiftUI
 import shared
 import UniformTypeIdentifiers
 
-struct TranslateTextField: View {
+struct TranslateTextField: View {   //компонент для ввода/вывода перевода
     @Binding var fromText: String
     let toText: String?
     let isTranslating: Bool

@@ -5,7 +5,7 @@
 import SwiftUI
 import shared
 
-struct SmallLanguageIcon: View {
+struct SmallLanguageIcon: View {    //иконка языка
     var language: UiLanguage
     var body: some View {
         Image(uiImage: UIImage(named: language.imageName.lowercased())!)

@@ -12,3 +12,5 @@ actual class DatabaseDriverFactory(
         return AndroidSqliteDriver(TranslateDatabase.Schema, context, "translate.db")
     }
 }
+
+//сервис для работы с бд на адроиде (1 в 1 как ios)

@@ -10,9 +10,9 @@ import Combine
     private var parser: any VoiceToTextParser
     private let languageCode: String
 
-    private let viewModel: VoiceToTextViewModel
-    @Published var state = VoiceToTextState(powerRatios: [], spokenText: "", canRecord: false, recordError: nil, displayState: nil)
-    private var handle: Kotlinx_coroutines_coreDisposableHandle?//DisposableHandle?
+    private let viewModel: VoiceToTextViewModel //КММ ЧАСТЬ
+    @Published var state = VoiceToTextState(powerRatios: [], spokenText: "", canRecord: false, recordError: nil, displayState: nil) //стейт для обновления UI
+    private var handle: Kotlinx_coroutines_coreDisposableHandle?//DisposableHandle? //подписка, где используется CommonFlow
 
     init(parser: VoiceToTextParser, languageCode: String) {
         self.parser = parser
@@ -22,18 +22,18 @@ import Combine
     }
 
     func onEvent(event: VoiceToTextEvent) {
-        viewModel.onEvent(event: event)
+        viewModel.onEvent(event: event) //отправка нужного имевента на MVI KMM
     }
 
-    func startObserving() {
+    func startObserving() { //подписываемся на наш кастомный флоу KMM
         handle = viewModel.state.subscribe { [weak self] state in
             if let state {
-                self?.state = state
+                self?.state = state //на обновление стейта
             }
         }
     }
 
-    func dispose() {
+    func dispose() {    //отменяет подписку
         handle?.dispose()
         onEvent(event: VoiceToTextEvent.Reset())
     }

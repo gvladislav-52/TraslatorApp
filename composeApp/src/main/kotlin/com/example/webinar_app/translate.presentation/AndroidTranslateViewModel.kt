@@ -15,17 +15,17 @@ class AndroidTranslateViewModel @Inject constructor(
     private val historyDataSource: HistoryDataSource
 ) : ViewModel() {
 
-    private val viewModel by lazy {
+    private val viewModel by lazy { //объект создаётся только при первом обращении.
         TranslateViewModel(
             translate = translate,
             historyDataSource = historyDataSource,
-            coroutineScope = viewModelScope
+            coroutineScope = viewModelScope //scope для корутин на Android, чтобы KMM корутины знали, где запускать асинхронную работу.
         )
     }
 
-    val state = viewModel.state
+    val state = viewModel.state //стейт для обновления ui
 
-    fun onEvent(event: TranslateEvent) {
+    fun onEvent(event: TranslateEvent) {    //отправка ивента
         viewModel.onEvent(event)
     }
 }

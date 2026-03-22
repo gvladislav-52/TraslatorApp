@@ -5,7 +5,7 @@
 import SwiftUI
 import shared
 
-struct LanguageDropDownItem: View {
+struct LanguageDropDownItem: View { //Отображения отдельного айтама выпадающего списка
     var language: UiLanguage
     var onClick: () -> Void
     var body: some View {

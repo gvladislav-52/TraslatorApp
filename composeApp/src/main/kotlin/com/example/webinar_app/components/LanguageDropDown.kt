@@ -1,4 +1,4 @@
-package com.example.webinar_app.translate.presentation.components
+package com.example.webinar_app.components
 
 import androidx.compose.foundation.clickable
 
@@ -62,9 +62,9 @@ fun LanguageDropDown(
             Icon(
                 imageVector = if(isOpen) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
                 contentDescription = if(isOpen) {
-                    stringResource(id = com.example.webinar_app.R.string.close)
+                    stringResource(id = R.string.close)
                 } else {
-                    stringResource(id = com.example.webinar_app.R.string.open)
+                    stringResource(id = R.string.open)
                 },
                 tint = LightBlue,
                 modifier = Modifier.size(30.dp)

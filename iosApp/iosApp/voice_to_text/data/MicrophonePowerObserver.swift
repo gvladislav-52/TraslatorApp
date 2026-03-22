@@ -7,13 +7,13 @@ import shared
 import Speech
 import Combine
 
-class MicrophonePowerObserver: ObservableObject {
-    private var cancellable: AnyCancellable? = nil
+class MicrophonePowerObserver: ObservableObject {   //следит за уровнем громкости микрофона
+    private var cancellable: AnyCancellable? = nil  //возмодность отменить
     private var audioRecorder: AVAudioRecorder? = nil
 
-    @Published private(set) var micPowerRatio = 0.0
+    @Published private(set) var micPowerRatio = 0.0 //тек значение микро
 
-    private let powerRatioEmissionsPerSecond = 20.0
+    private let powerRatioEmissionsPerSecond = 20.0 //частота обновления громкости
 
     func startObserving() {
         do {
@@ -21,7 +21,7 @@ class MicrophonePowerObserver: ObservableObject {
                 AVFormatIDKey: NSNumber(value: kAudioFormatAppleLossless),
                 AVNumberOfChannelsKey: 1
             ]
-
+            //создаем фальшивую аудиозапись /dev/nul, включаем измерение громкости (Запись идёт, но файл не сохраняется)
             let recorder = try AVAudioRecorder(url: URL(fileURLWithPath: "/dev/null", isDirectory: true), settings: recorderSettings)
             recorder.isMeteringEnabled = true
             recorder.record()
@@ -34,7 +34,7 @@ class MicrophonePowerObserver: ObservableObject {
                     in: .common
                 )
                 .autoconnect()
-                .sink { [weak self] _ in
+                .sink { [weak self] _ in    //каждые 1/20 обновляем громкость
                     recorder.updateMeters()
 
                     let powerOffset = recorder.averagePower(forChannel: 0)
@@ -50,7 +50,7 @@ class MicrophonePowerObserver: ObservableObject {
         }
     }
 
-    func release() {
+    func release() {    //останавливаем наблюдение
         cancellable = nil
 
         audioRecorder?.stop()

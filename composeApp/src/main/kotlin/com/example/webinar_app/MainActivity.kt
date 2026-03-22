@@ -35,16 +35,16 @@ import com.example.webinar_app.voice_to_text.presentation.VoiceToTextEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
-fun TranslatorTheme(
+fun TranslatorTheme(    //определение темы приложение на устройстве
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
+    val colors = if (darkTheme) {   //палитра цвета
         com.example.webinar_app.core.theme.darkColors
     } else {
         com.example.webinar_app.core.theme.lightColors
     }
-    val SfProText = FontFamily(
+    val SfProText = FontFamily( // определяем кастомный шрифт
         Font(
             resId = R.font.sf_pro_text_regular,
             weight = FontWeight.Normal
@@ -58,7 +58,7 @@ fun TranslatorTheme(
             weight = FontWeight.Bold
         ),
     )
-    val typography = Typography(
+    val typography = Typography(    //настраиваем размер, форму углов и тд
         h1 = TextStyle(
             fontFamily = SfProText,
             fontWeight = FontWeight.Bold,
@@ -91,7 +91,7 @@ fun TranslatorTheme(
         large = RoundedCornerShape(0.dp)
     )
 
-    MaterialTheme(
+    MaterialTheme(  //Применяем тему ко всему UI, который находится внутри content
         colors = colors,
         typography = typography,
         shapes = shapes,
@@ -99,8 +99,8 @@ fun TranslatorTheme(
     )
 }
 
-@AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint  //Hilt может внедрять зависимости в эту Activity
+class MainActivity : ComponentActivity() {  //точка входа в приложение с настройкой (темы, рут-навигации и тд)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -116,18 +116,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun TranslateRoot() {
+@Composable //помечает функцию как UI-компонент, который можно отображать на экране
+fun TranslateRoot() {   //компонент навигации андроид устройства
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Routes.TRANSLATE
+        startDestination = Routes.TRANSLATE //Создаём NavController для управления навигацией
     ) {
         composable(route = Routes.TRANSLATE) {
-            val viewModel = hiltViewModel<AndroidTranslateViewModel>()
-            val state by viewModel.state.collectAsState()
+            val viewModel = hiltViewModel<AndroidTranslateViewModel>()  //di зависимость
+            val state by viewModel.state.collectAsState()   //подписка на стейт флоу
 
-            val voiceResult by it
+            val voiceResult by it   //Если с экрана голосового ввода вернулся текст → отправляем его в ViewModel через событие
                 .savedStateHandle
                 .getStateFlow<String?>("voiceResult", null)
                 .collectAsState()
@@ -136,11 +136,11 @@ fun TranslateRoot() {
                 it.savedStateHandle["voiceResult"] = null
             }
 
-            TranslateScreen(
+            TranslateScreen(    //Основной экран перевода
                 state = state,
                 onEvent = { event ->
                     when(event) {
-                        is TranslateEvent.RecordAudio -> {
+                        is TranslateEvent.RecordAudio -> { //Событие RecordAudio → переходит на экран записи голоса
                             navController.navigate(
                                 Routes.VOICE_TO_TEXT + "/${state.fromLanguage.language.langCode}"
                             )
@@ -150,7 +150,7 @@ fun TranslateRoot() {
                 }
             )
         }
-        composable(
+        composable( //экран распознавани речи
             route = Routes.VOICE_TO_TEXT + "/{languageCode}",
             arguments = listOf(
                 navArgument("languageCode") {
@@ -163,6 +163,7 @@ fun TranslateRoot() {
             val viewModel = hiltViewModel<AndroidVoiceToTextViewModel>()
             val state by viewModel.state.collectAsState()
 
+            //Подключаем ViewModel для голосового ввода
             VoiceToTextScreen(
                 state = state,
                 languageCode = languageCode,
@@ -170,12 +171,14 @@ fun TranslateRoot() {
                     navController.previousBackStackEntry?.savedStateHandle?.set(
                         "voiceResult", spokenText
                     )
+                   // Передаём обратно текст в предыдущий экран через savedStateHandle
                     navController.popBackStack()
                 },
                 onEvent = { event ->
                     when(event) {
                         is VoiceToTextEvent.Close -> {
                             navController.popBackStack()
+                            //popBackStack() → закрываем экран записи голоса
                         }
                         else -> viewModel.onEvent(event)
                     }

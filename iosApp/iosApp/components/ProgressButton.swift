@@ -5,7 +5,7 @@
 import SwiftUI
 import shared
 
-struct ProgressButton: View {
+struct ProgressButton: View {   //кнопка translate + loader
     var text: String
     var isLoading: Bool
     var onClick: () -> Void

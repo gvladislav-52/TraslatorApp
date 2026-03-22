@@ -4,11 +4,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-actual open class CommonMutableStateFlow<T> actual constructor(
+actual open class CommonMutableStateFlow<T> actual constructor( //платформенная реализация на ios
     private val flow: MutableStateFlow<T>
-): CommonStateFlow<T>(flow), MutableStateFlow<T> {
+): CommonStateFlow<T>(flow), MutableStateFlow<T> {  //наследование и интерфейс
 
-    override var value: T
+    override var value: T   //перегрузка метода value из класса CommonStateFlow
         get() = super.value
         set(value) {
             flow.value = value
@@ -17,7 +17,7 @@ actual open class CommonMutableStateFlow<T> actual constructor(
     override val subscriptionCount: StateFlow<Int>
         get() = flow.subscriptionCount
 
-    override fun compareAndSet(expect: T, update: T): Boolean {
+    override fun compareAndSet(expect: T, update: T): Boolean {  //ч
         return flow.compareAndSet(expect, update)
     }
 
